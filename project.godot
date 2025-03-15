@@ -11,5 +11,5 @@ config_version=5
 [application]
 
 config/name="bullet_hell_poc"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
