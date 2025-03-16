@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://rpvfyvfaemfy"]
+
+[ext_resource type="Texture2D" uid="uid://bdcq7qy3gwve2" path="res://art/basic_laser_blast.png" id="1_jwso1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wa78e"]
+radius = 8.0
+height = 96.0
+
+[node name="Basic Laser Beam" type="RigidBody2D"]
+gravity_scale = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_jwso1")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_wa78e")

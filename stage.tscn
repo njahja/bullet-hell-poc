@@ -1,7 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://hcu5ti0440tn"]
+[gd_scene load_steps=3 format=3 uid="uid://hcu5ti0440tn"]
 
 [ext_resource type="PackedScene" uid="uid://t2wgnk2pyono" path="res://player.tscn" id="1_6eo5e"]
+[ext_resource type="PackedScene" uid="uid://dfhnk0yjllq07" path="res://boss_1.tscn" id="2_aees8"]
 
 [node name="Stage" type="Node"]
 
 [node name="Player" parent="." instance=ExtResource("1_6eo5e")]
+position = Vector2(180, 655)
+
+[node name="Boss1" parent="." instance=ExtResource("2_aees8")]
+position = Vector2(1703, 598)
