@@ -1,9 +1,43 @@
 [gd_scene load_steps=8 format=3 uid="uid://dfhnk0yjllq07"]
 
 [ext_resource type="Texture2D" uid="uid://d12wfe3j1m3ee" path="res://art/enemyFlyingAlt_1.png" id="1_2nlvs"]
-[ext_resource type="Script" uid="uid://bee70b3knglw5" path="res://boss_1.gd" id="1_y66il"]
-[ext_resource type="PackedScene" uid="uid://rpvfyvfaemfy" path="res://basic_laser_beam.tscn" id="2_p7pij"]
+[ext_resource type="PackedScene" uid="uid://rpvfyvfaemfy" path="res://bosses/basic_laser_beam.tscn" id="2_p7pij"]
 [ext_resource type="Texture2D" uid="uid://du3fbtda0uqom" path="res://art/enemyFlyingAlt_2.png" id="2_y66il"]
+
+[sub_resource type="GDScript" id="GDScript_fsng5"]
+script/source = "extends Area2D
+
+signal hit
+
+@export var laser: PackedScene
+@export var health = 20
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	$LaserBeamCD.start()
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	if (health <= 0):
+		queue_free()
+
+func _on_laser_beam_cd_timeout() -> void:
+	var laser = laser.instantiate()
+	
+	var laser_location = $Path2D/PathFollow2D
+	laser_location.progress_ratio = randf()
+	laser.position = laser_location.position
+	
+	laser.linear_velocity = Vector2(-400, 0)
+	
+	add_child(laser)
+
+func _on_body_entered(body: Node2D) -> void:
+	if (body.is_in_group(\"player_projectiles\")):
+		health -= 1
+		hit.emit()
+		body.queue_free()
+"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p7pij"]
 animations = [{
@@ -31,7 +65,7 @@ point_count = 5
 
 [node name="Boss1" type="Area2D"]
 collision_mask = 2
-script = ExtResource("1_y66il")
+script = SubResource("GDScript_fsng5")
 laser = ExtResource("2_p7pij")
 metadata/_edit_group_ = true
 
