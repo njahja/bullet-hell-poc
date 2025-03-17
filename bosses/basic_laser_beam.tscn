@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://rpvfyvfaemfy"]
 
-[ext_resource type="Texture2D" uid="uid://bdcq7qy3gwve2" path="res://art/basic_laser_blast.png" id="1_jwso1"]
+[ext_resource type="Texture2D" uid="uid://bdcq7qy3gwve2" path="res://art/basic_laser_blast.png" id="1_hjxiy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wa78e"]
 radius = 8.0
@@ -11,7 +11,7 @@ collision_layer = 2
 gravity_scale = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_jwso1")
+texture = ExtResource("1_hjxiy")
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
