@@ -3,7 +3,7 @@ extends Area2D
 signal hit
 
 @export var Bullet: PackedScene
-
+@export var health = 10
 @export var speed = 400
 var screen_size
 
@@ -32,23 +32,22 @@ func _process(delta: float) -> void:
 		
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
-
-func start(pos):
-	position = pos
-	show()
-	$CollisionShape2D.disabled = false
+	
+	if (health <= 0):
+		queue_free()
 
 func _on_body_entered(body: Node2D):
-	hit.emit()
-	$CollisionShape2D.set_deferred("disabled", true)
-	$InvulTimer.start()
-
+	if (body.is_in_group("enemy_projectiles")):
+		$CollisionShape2D.set_deferred("disabled", true)
+		$InvulTimer.start()
+		health -= 1
+		hit.emit()
+		body.queue_free()
 
 func _on_invul_timer_timeout():
 	$CollisionShape2D.set_deferred("disabled", false)
 
-
-func _on_weapon_cd_timeout() -> void:
+func _on_weapon_cd_timeout():
 	var bullet = Bullet.instantiate()
+	bullet.position = position
 	owner.add_child(bullet)
-	bullet.transform = $Marker2D.global_transform

@@ -6,7 +6,8 @@
 radius = 8.0
 height = 96.0
 
-[node name="Basic Laser Beam" type="RigidBody2D"]
+[node name="Basic Laser Beam" type="RigidBody2D" groups=["enemy_projectiles"]]
+collision_layer = 2
 gravity_scale = 0.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

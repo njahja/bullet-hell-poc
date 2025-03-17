@@ -24,6 +24,7 @@ radius = 52.0
 height = 126.0
 
 [node name="Player" type="Area2D"]
+collision_mask = 2
 script = ExtResource("1_i3pqv")
 Bullet = ExtResource("2_sweqy")
 metadata/_edit_group_ = true

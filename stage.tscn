@@ -1,12 +1,31 @@
-[gd_scene load_steps=3 format=3 uid="uid://hcu5ti0440tn"]
+[gd_scene load_steps=4 format=3 uid="uid://hcu5ti0440tn"]
 
 [ext_resource type="PackedScene" uid="uid://t2wgnk2pyono" path="res://player.tscn" id="1_6eo5e"]
+[ext_resource type="Script" uid="uid://b0eou7g2aadwv" path="res://stage.gd" id="1_rnkuw"]
 [ext_resource type="PackedScene" uid="uid://dfhnk0yjllq07" path="res://boss_1.tscn" id="2_aees8"]
 
 [node name="Stage" type="Node"]
+script = ExtResource("1_rnkuw")
 
 [node name="Player" parent="." instance=ExtResource("1_6eo5e")]
 position = Vector2(180, 655)
 
 [node name="Boss1" parent="." instance=ExtResource("2_aees8")]
 position = Vector2(1703, 598)
+
+[node name="PlayerHP" type="Label" parent="."]
+offset_left = 45.0
+offset_top = 1025.0
+offset_right = 128.0
+offset_bottom = 1048.0
+text = "Player HP: "
+
+[node name="BossHP" type="Label" parent="."]
+offset_left = 1661.0
+offset_top = 122.0
+offset_right = 1732.0
+offset_bottom = 145.0
+text = "Boss HP: "
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="hit" from="Boss1" to="." method="_on_boss_1_hit"]
