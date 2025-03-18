@@ -1,64 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://t2wgnk2pyono"]
+[gd_scene load_steps=6 format=3 uid="uid://t2wgnk2pyono"]
 
+[ext_resource type="Script" uid="uid://dfpo4jlitdpyf" path="res://player/player.gd" id="1_g1dw6"]
 [ext_resource type="Texture2D" uid="uid://bfydf8haqsjto" path="res://art/playerGrey_walk1.png" id="2_hqtel"]
-[ext_resource type="PackedScene" uid="uid://cwdins0unq06a" path="res://player/weapons/projectile.tscn" id="2_sweqy"]
 [ext_resource type="Texture2D" uid="uid://bn0n0uh4hsyxe" path="res://art/playerGrey_walk2.png" id="3_sweqy"]
-
-[sub_resource type="GDScript" id="GDScript_g1dw6"]
-script/source = "extends Area2D
-
-signal hit
-
-@export var Bullet: PackedScene
-@export var health = 10
-@export var speed = 400
-var screen_size
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	screen_size = get_viewport_rect().size
-	$WeaponCD.start()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	var velocity = Vector2.ZERO
-	if Input.is_action_pressed(\"ui_up\"):
-		velocity.y -= 1
-	if Input.is_action_pressed(\"ui_down\"):
-		velocity.y += 1
-	if Input.is_action_pressed(\"ui_right\"):
-		velocity.x += 1
-	if Input.is_action_pressed(\"ui_left\"):
-		velocity.x -= 1
-		
-	if velocity.length() > 0:
-		velocity = velocity.normalized() * speed
-		$AnimatedSprite2D.play()
-	else:
-		$AnimatedSprite2D.stop()
-		
-	position += velocity * delta
-	position = position.clamp(Vector2.ZERO, screen_size)
-	
-	if (health <= 0):
-		queue_free()
-
-func _on_body_entered(body: Node2D):
-	if (body.is_in_group(\"enemy_projectiles\")):
-		$CollisionShape2D.set_deferred(\"disabled\", true)
-		$InvulTimer.start()
-		health -= 1
-		hit.emit()
-		body.queue_free()
-
-func _on_invul_timer_timeout():
-	$CollisionShape2D.set_deferred(\"disabled\", false)
-
-func _on_weapon_cd_timeout():
-	var bullet = Bullet.instantiate()
-	bullet.position = position
-	owner.add_child(bullet)
-"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2hs0m"]
 animations = [{
@@ -80,8 +24,7 @@ height = 126.0
 
 [node name="Player" type="Area2D"]
 collision_mask = 2
-script = SubResource("GDScript_g1dw6")
-Bullet = ExtResource("2_sweqy")
+script = ExtResource("1_g1dw6")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

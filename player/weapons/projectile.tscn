@@ -1,15 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cwdins0unq06a"]
 
 [ext_resource type="Texture2D" uid="uid://c1mwah4oqtk1o" path="res://art/laserRed01.png" id="1_a85iw"]
-
-[sub_resource type="GDScript" id="GDScript_ywvrf"]
-script/source = "extends RigidBody2D
-
-@export var speed = 800
-
-func _ready():
-	linear_velocity = Vector2(speed, 0)
-"
+[ext_resource type="Script" uid="uid://eiaos0pyelnw" path="res://player/weapons/projectile.gd" id="1_jpm5p"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qxf0c"]
 radius = 4.0
@@ -18,7 +10,7 @@ height = 54.0
 [node name="Projectile" type="RigidBody2D" groups=["player_projectiles"]]
 collision_layer = 2
 gravity_scale = 0.0
-script = SubResource("GDScript_ywvrf")
+script = ExtResource("1_jpm5p")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
