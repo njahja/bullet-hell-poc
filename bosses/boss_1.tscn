@@ -1,8 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://dfhnk0yjllq07"]
+[gd_scene load_steps=10 format=3 uid="uid://dfhnk0yjllq07"]
 
 [ext_resource type="Texture2D" uid="uid://d12wfe3j1m3ee" path="res://art/enemyFlyingAlt_1.png" id="1_2nlvs"]
 [ext_resource type="Script" uid="uid://bee70b3knglw5" path="res://bosses/boss_1.gd" id="1_fsng5"]
+[ext_resource type="PackedScene" uid="uid://rpvfyvfaemfy" path="res://bosses/basic_laser_beam.tscn" id="2_p7pij"]
+[ext_resource type="Shader" uid="uid://bhh5naq1x7pmc" path="res://shaders/flash_hit.gdshader" id="2_qnsdo"]
 [ext_resource type="Texture2D" uid="uid://du3fbtda0uqom" path="res://art/enemyFlyingAlt_2.png" id="2_y66il"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l5ia4"]
+resource_local_to_scene = true
+shader = ExtResource("2_qnsdo")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p7pij"]
 animations = [{
@@ -31,9 +39,11 @@ point_count = 5
 [node name="Boss1" type="Area2D"]
 collision_mask = 2
 script = ExtResource("1_fsng5")
+laser = ExtResource("2_p7pij")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_l5ia4")
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_p7pij")
 autoplay = "default"
@@ -54,5 +64,10 @@ rotation = 1.5708
 [node name="LaserBeamCD" type="Timer" parent="."]
 wait_time = 2.0
 
+[node name="FlashHitTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="LaserBeamCD" to="." method="_on_laser_beam_cd_timeout"]
+[connection signal="timeout" from="FlashHitTimer" to="." method="_on_flash_hit_timer_timeout"]
