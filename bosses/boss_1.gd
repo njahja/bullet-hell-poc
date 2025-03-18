@@ -29,4 +29,12 @@ func _on_body_entered(body: Node2D) -> void:
 	if (body.is_in_group("player_projectiles")):
 		health -= 1
 		hit.emit()
+		
+		$FlashHitTimer.start()
+		$AnimatedSprite2D.material.set_shader_parameter("flash_modifier", 0.5)
+		
 		body.queue_free()
+
+
+func _on_flash_hit_timer_timeout() -> void:
+	$AnimatedSprite2D.material.set_shader_parameter("flash_modifier", 0)

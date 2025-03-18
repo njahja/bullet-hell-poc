@@ -40,6 +40,10 @@ func _on_body_entered(body: Node2D):
 	if (body.is_in_group("enemy_projectiles")):
 		$CollisionShape2D.set_deferred("disabled", true)
 		$InvulTimer.start()
+
+		$FlashHitTimer.start()
+		$AnimatedSprite2D.material.set_shader_parameter("flash_modifier", 0.5)
+		
 		health -= 1
 		hit.emit()
 		body.queue_free()
@@ -51,3 +55,7 @@ func _on_weapon_cd_timeout():
 	var bullet = Bullet.instantiate()
 	bullet.position = position
 	owner.add_child(bullet)
+
+
+func _on_flash_hit_timer_timeout() -> void:
+	$AnimatedSprite2D.material.set_shader_parameter("flash_modifier", 0)
